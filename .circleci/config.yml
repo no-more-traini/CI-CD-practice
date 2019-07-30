@@ -39,7 +39,9 @@ jobs:
             py-pip=9.0.0-r1
             pip install \
             awscli==1.14.37
-            # Send to s3
+      -run:
+        name: Send to AWS S3
+        command: |
             case $CIRCLE_BRANCH in
             "master") 
               aws s3 sync build/ s3://lolisslayers 
