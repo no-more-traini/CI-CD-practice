@@ -53,6 +53,11 @@ class App extends Component {
   // read when loading
   componentDidMount() {
     this.fetchTask()
+
+    if (window.innerWidth <= 850) {
+      toggle_r_c.classList.remove('row')
+      toggle_r_c.classList.add('column')
+    }
   }
 
   fetchTask() {
@@ -94,7 +99,7 @@ class App extends Component {
       </nav>
 
       <div className="container">
-        <div className="row">
+        <div id="toggle_r_c" className="row">
           <div className="col s5">
             <div className="card">
               <div className="card-content">
