@@ -1,6 +1,7 @@
 const morgan = require('morgan')
 const path = require('path')
 const express = require('express')
+const cors = require('cors');
 
 const app = express()
 
@@ -12,6 +13,10 @@ app.set('port', process.env.PORT || 3000)
 // Middlewares
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(cors({
+  origin: '*',
+  optionsSuccessStatus: 200
+}))
 
 // Routes
 app.use('/api/task', require('./routes/task.routes'))

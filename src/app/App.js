@@ -22,7 +22,7 @@ class App extends Component {
   addTask(e) {
     e.preventDefault()
     if (this.state._id) {
-      fetch(`/api/task/${this.state._id}`, {
+      fetch(`http://localhost:3000/api/task/${this.state._id}`, {
         method: 'PUT',
         body: JSON.stringify(this.state),
         headers: {
@@ -35,7 +35,7 @@ class App extends Component {
         this.fetchTask()
       })
     } else {
-      fetch('/api/task', {
+      fetch('http://localhost:3000/api/task', {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
@@ -56,14 +56,14 @@ class App extends Component {
   }
 
   fetchTask() {
-    fetch('/api/task').then(res => res.json()).then(data => {
+    fetch('http://localhost:3000/api/task').then(res => res.json()).then(data => {
       this.setState({tasks: data})
     })
   }
 
   deleteTask(_id) {
     if (confirm('Are you sure you want to delete it?')) {
-      fetch(`/api/task/${_id}`, {
+      fetch(`http://localhost:3000/api/task/${_id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -78,7 +78,7 @@ class App extends Component {
 
   editTask(_id) {
     // NOTE: making a new request
-    fetch(`/api/task/${_id}`).then(res => res.json()).then(data => {
+    fetch(`http://localhost:3000/api/task/${_id}`).then(res => res.json()).then(data => {
       this.setState({title: data.title, description: data.description, _id: data._id})
     })
     // NOTE: with the information that you already have
