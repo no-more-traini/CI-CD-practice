@@ -33,7 +33,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          #Get all pre-requisites
+          name: Get all pre-requisites
           command: |
             ls -lha &&
             apk add --no-cache \
@@ -45,10 +45,10 @@ jobs:
           command: |
               case $CIRCLE_BRANCH in
               "master") 
-                aws s3 sync ./build/ s3://lolisslayers/ 
+                aws s3 sync src/public/ s3://lolisslayers/ 
               ;;
               "dev") 
-                aws s3 sync ./build/ s3://lolisslayers-dev/ 
+                aws s3 sync src/public/ s3://lolisslayers-dev/ 
               ;;
               esac
 workflows:
