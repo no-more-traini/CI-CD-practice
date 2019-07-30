@@ -44,10 +44,10 @@ jobs:
           command: |
               case $CIRCLE_BRANCH in
               "master") 
-                aws s3 sync build/ s3://lolisslayers 
+                aws s3 sync ./build/ s3://lolisslayers/ 
               ;;
               "dev") 
-                aws s3 sync build/ s3://lolisslayers-dev 
+                aws s3 sync ./build/ s3://lolisslayers-dev/ 
               ;;
               esac
 workflows:
