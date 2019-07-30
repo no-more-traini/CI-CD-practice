@@ -35,10 +35,11 @@ jobs:
       - run:
           #Get all pre-requisites
           command: |
+            ls -lha &&
             apk add --no-cache \
-            py-pip=9.0.0-r1
+            py-pip
             pip install \
-            awscli==1.14.37
+            awscli
       - run:
           name: Send to AWS S3
           command: |
