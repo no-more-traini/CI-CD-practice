@@ -39,17 +39,17 @@ jobs:
             py-pip=9.0.0-r1
             pip install \
             awscli==1.14.37
-      -run:
-        name: Send to AWS S3
-        command: |
-            case $CIRCLE_BRANCH in
-            "master") 
-              aws s3 sync build/ s3://lolisslayers 
-            ;;
-            "dev") 
-              aws s3 sync build/ s3://lolisslayers-dev 
-            ;;
-            esac
+      - run:
+          name: Send to AWS S3
+          command: |
+              case $CIRCLE_BRANCH in
+              "master") 
+                aws s3 sync build/ s3://lolisslayers 
+              ;;
+              "dev") 
+                aws s3 sync build/ s3://lolisslayers-dev 
+              ;;
+              esac
 workflows:
   version: 2
   build-test-and-deploy:
