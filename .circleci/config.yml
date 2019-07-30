@@ -33,21 +33,24 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          #Get all pre-requisites
+          name: Get all pre-requisites
           command: |
+            ls -lha &&
             apk add --no-cache \
-            py-pip=9.0.0-r1
+            py-pip
             pip install \
-            awscli==1.14.37
-            # Send to s3
-            case $CIRCLE_BRANCH in
-            "master") 
-              aws s3 sync build/ s3://lolisslayers 
-            ;;
-            "dev") 
-              aws s3 sync build/ s3://lolisslayers-dev 
-            ;;
-            esac
+            awscli
+      - run:
+          name: Send to AWS S3
+          command: |
+              case $CIRCLE_BRANCH in
+              "master") 
+                aws s3 sync src/public/ s3://lolisslayers/ 
+              ;;
+              "dev") 
+                aws s3 sync src/public/ s3://lolisslayers-dev/ 
+              ;;
+              esac
 workflows:
   version: 2
   build-test-and-deploy:
