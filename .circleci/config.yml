@@ -46,11 +46,9 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build-deploy-frontend:
+    - build-deploy-frontend:
           filters:
             branches:
               only:
-                - frontend-prod
-                - frontend-dev
-
-          
+              - frontend-prod
+              - frontend-dev
