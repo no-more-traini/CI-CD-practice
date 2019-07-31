@@ -1,6 +1,9 @@
 version: 2
+orbs:
+  aws-ecr: circleci/aws-ecr@0.0.2
+  aws-ecs: circleci/aws-ecs@0.0.8
 jobs:
-  build:
+  build-deploy-frontend:
     docker:
       - image: circleci/node:10.16.0
     steps:
@@ -22,50 +25,32 @@ jobs:
       - run:
           name: Build the application
           command: npm run build
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - package.json
-            - node_modules
-            - src
-            - build
-  deploy:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./
+      
       - run:
-          name: Get all pre-requisites
+          name: Install pre-requisites
           command: |
-            ls -lha &&
-            apk add --no-cache \
-            py-pip
-            pip install \
-            awscli
+            pip install aws-cli
+            
       - run:
           name: Send to AWS S3
           command: |
               case $CIRCLE_BRANCH in
-              "master") 
+              "frontend-prod") 
                 aws s3 sync src/public/ s3://lolisslayers/ 
               ;;
-              "dev") 
+              "frontend-dev") 
                 aws s3 sync src/public/ s3://lolisslayers-dev/ 
               ;;
               esac
+              
 workflows:
   version: 2
-  build-test-and-deploy:
+  build-and-deploy:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+      - build-deploy-frontend:
           filters:
             branches:
               only:
-                - master
-                - dev
-     
+                - frontend-prod
+                - frontend-dev
+    
