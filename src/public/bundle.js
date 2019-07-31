@@ -260,7 +260,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = 'http://localhost:3000/api/task';\n\n//# sourceURL=webpack:///./src/utils/apiUrl.js?");
+eval("module.exports = \"http://lolisslayers-2120739464.us-east-1.elb.amazonaws.com/api/task\";\n\n//# sourceURL=webpack:///./src/utils/apiUrl.js?");
 
 /***/ })
 
