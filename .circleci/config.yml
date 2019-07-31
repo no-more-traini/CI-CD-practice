@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Install pre-requisites
           command: |
-            sudo apt update && sudo apt install -y aws-cli
+            sudo apt update && sudo apt install -y awscli
             
       - run:
           name: Send to AWS S3
