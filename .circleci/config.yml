@@ -47,9 +47,9 @@ workflows:
   build-and-deploy:
     jobs:
     - build-deploy-frontend:
-          filters:
-            branches:
-              only:
+        filters:
+          branches:
+            only:
               - frontend-prod
               - frontend-dev
     - aws-ecr/build_and_push_image:
@@ -62,15 +62,16 @@ workflows:
             only:
               - backend-prod
               - backend-dev
-      - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build_and_push_image
-          filters:
-            branches:
-              only:
-                - backend-prod
-                - backend-dev
-          aws-region: ${AWS_DEFAULT_REGION}
-          family: "${AWS_RESOURCE_NAME_PREFIX}"
-          cluster-name: "${AWS_RESOURCE_NAME_PREFIX}"
-          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}"
+    - aws-ecs/deploy-service-update:
+        requires:
+          - aws-ecr/build_and_push_image
+        filters:
+          branches:
+            only:
+              - backend-prod
+              - backend-dev
+        aws-region: ${AWS_DEFAULT_REGION}
+        family: "${AWS_RESOURCE_NAME_PREFIX}"
+        cluster-name: "${AWS_RESOURCE_NAME_PREFIX}"
+        container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}"
+          
