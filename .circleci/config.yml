@@ -36,10 +36,10 @@ jobs:
           command: |
               case $CIRCLE_BRANCH in
               "frontend-prod") 
-                aws s3 sync src/public/ s3://lolisslayers/ 
+                aws s3 sync src/public/ s3://lolisslayers/ --delete
               ;;
               "frontend-dev") 
-                aws s3 sync src/public/ s3://lolisslayers-dev/ 
+                aws s3 sync src/public/ s3://lolisslayers-dev/ --delete
               ;;
               esac 
 workflows:
