@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.2
   aws-ecs: circleci/aws-ecs@0.0.8
@@ -44,9 +44,10 @@ jobs:
               esac 
               
 workflows:
+  version: 2.1
   build-and-deploy:
     jobs:
-      - build_deploy_frontend:
+      - build-deploy-frontend:
           filters:
             branches:
               only:
