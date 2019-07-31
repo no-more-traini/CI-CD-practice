@@ -1,1 +1,1 @@
-module.exports = 'http://localhost:3000/api/task';
+module.exports = "http://lolisslayers-2120739464.us-east-1.elb.amazonaws.com/api/task";
