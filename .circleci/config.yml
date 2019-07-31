@@ -29,8 +29,7 @@ jobs:
       - run:
           name: Install pre-requisites
           command: |
-            sudo apt install -y python-pip
-            pip install aws-cli
+            sudo apt install -y aws-cli
             
       - run:
           name: Send to AWS S3
