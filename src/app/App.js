@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import apiUrl from '../utils/apiUrl'
 class App extends Component {
 
   constructor() {
@@ -22,7 +22,7 @@ class App extends Component {
   addTask(e) {
     e.preventDefault()
     if (this.state._id) {
-      fetch(`http://localhost:3000/api/task/${this.state._id}`, {
+      fetch(`${apiUrl}/${this.state._id}`, {
         method: 'PUT',
         body: JSON.stringify(this.state),
         headers: {
@@ -35,7 +35,7 @@ class App extends Component {
         this.fetchTask()
       })
     } else {
-      fetch('http://localhost:3000/api/task', {
+      fetch(`${apiUrl}`, {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
@@ -61,14 +61,14 @@ class App extends Component {
   }
 
   fetchTask() {
-    fetch('http://localhost:3000/api/task').then(res => res.json()).then(data => {
+    fetch(`${apiUrl}`).then(res => res.json()).then(data => {
       this.setState({tasks: data})
     })
   }
 
   deleteTask(_id) {
     if (confirm('Are you sure you want to delete it?')) {
-      fetch(`http://localhost:3000/api/task/${_id}`, {
+      fetch(`${apiUrl}/${_id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -83,7 +83,7 @@ class App extends Component {
 
   editTask(_id) {
     // NOTE: making a new request
-    fetch(`http://localhost:3000/api/task/${_id}`).then(res => res.json()).then(data => {
+    fetch(`${apiUrl}/${_id}`).then(res => res.json()).then(data => {
       this.setState({title: data.title, description: data.description, _id: data._id})
     })
     // NOTE: with the information that you already have
