@@ -41,9 +41,7 @@ jobs:
               "frontend-dev") 
                 aws s3 sync src/public/ s3://lolisslayers-dev/ 
               ;;
-              esac
-              
-
+              esac 
 workflows:
   version: 2
   build-and-deploy:
