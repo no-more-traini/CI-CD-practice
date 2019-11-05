@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 
 parameters:
   message:
@@ -46,7 +46,7 @@ jobs:
     
      
 workflows:
-  version: 2.1
+  version: 2
   build-and-deploy:
     jobs:
       - build:
