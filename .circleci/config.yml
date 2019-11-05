@@ -1,9 +1,12 @@
 version: 2.1
-orbs:
-  aws-ecr: circleci/aws-ecr@0.0.2
-  aws-ecs: circleci/aws-ecs@0.0.8
+
+parameters:
+  message:
+    type: string
+    default: "Successfuly"
+
 jobs:
-  build-deploy-frontend:
+  build:
     docker:
       - image: circleci/node:10.16.0
     steps:
@@ -31,48 +34,32 @@ jobs:
           command: |
             sudo apt update && sudo apt install -y awscli
             
+  deploy:
+    docker:
+      - image: circleci/python:2.7
+    steps:
+      
       - run:
-          name: Send to AWS S3
-          command: |
-              case $CIRCLE_BRANCH in
-              "frontend-prod") 
-                aws s3 sync src/public/ s3://lolisslayers/ --delete
-              ;;
-              "frontend-dev") 
-                aws s3 sync src/public/ s3://lolisslayers-dev/ --delete
-              ;;
-              esac 
+          name: Deploying
+          command: echo "Deployed << pipeline.parameters.message >>! :D"            
+
+    
+     
 workflows:
   version: 2.1
   build-and-deploy:
     jobs:
-      - build-deploy-frontend:
+      - build:
           filters:
             branches:
               only:
                 - frontend-prod
-                - frontend-dev
-      - aws-ecr/build_and_push_image:
-          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-          repo: "${AWS_RESOURCE_NAME_PREFIX}"
-          region: ${AWS_DEFAULT_REGION}
-          tag: "${CIRCLE_SHA1}"
-          filters:
-            branches:
-              only:
-                - backend-prod
-                - backend-dev
-      - aws-ecs/deploy-service-update:
+      - deploy:
           requires:
-            - aws-ecr/build_and_push_image
+            - build
           filters:
             branches:
               only:
-                - backend-prod
-                - backend-dev
-          aws-region: ${AWS_DEFAULT_REGION}
-          family: "${AWS_RESOURCE_NAME_PREFIX}"
-          cluster-name: "${AWS_RESOURCE_NAME_PREFIX}"
-          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}"
-      
+                - frontend-prod
+
 
